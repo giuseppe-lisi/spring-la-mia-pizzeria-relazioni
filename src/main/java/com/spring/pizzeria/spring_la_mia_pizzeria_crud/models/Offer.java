@@ -26,15 +26,15 @@ public class Offer {
     @JoinColumn( name = "pizza_id", nullable = false)
     private Pizza pizza;
 
-    @NotNull
+    @NotNull(message = "Inserire un nome per l'offerta")
     private String title;
 
-    @NotNull
-    @PastOrPresent
+    @NotNull(message = "Inserire una data di inizio dell'offerta")
+    @PastOrPresent(message = "La data di inizio non può essere nel futuro")
     private LocalDate startDate;
-
-    @NotNull
-    @Future
+    
+    @NotNull(message = "Inserire una data di inizio dell'offerta")
+    @Future(message = "La data di terminazione di un'offerta deve essere nel futuro")
     private LocalDate endDate;
 
     public Integer getId() {
