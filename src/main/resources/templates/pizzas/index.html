@@ -47,12 +47,12 @@
                             <td>
                                 <!-- Modal trigger -->
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal">
+                                    th:data-bs-target="'#modal' + *{id}">
                                     Elimina
                                 </button>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="deleteModal" tabindex="-1">
+                                <div class="modal fade" th:id="'modal' + *{id}" tabindex="-1">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
