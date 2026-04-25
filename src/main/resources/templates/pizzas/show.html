@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria - Dettaglio Pizza</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}" />
+</head>
+
+<body>
+    <div th:replace="~{ fragments/navbar :: navbar }"></div>
+
+    <main>
+        <div class="container mt-5 shadow-lg" th:object="${pizza}">
+            <div class="row border border-secondary-subtle p-2 rounded-2 h-100">
+                <div class="col-8 border-end  border-secondary">
+                    <h3 th:text="'Dettaglio ' + *{name}"></h3>
+                    <h5 th:text="${pizza.toString()}"></h5>
+                    <p th:text="*{description}"></p>
+                </div>
+                <div class="col-4">
+                    <img th:src="*{img}" class="object-fit-contain overflow-hidden w-100 h-100 rounded-1 shadow-sm">
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria - Lista Pizze</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}" />
+</head>
+
+<body>
+    <div th:replace="~{ fragments/navbar :: navbar }"></div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h3>Lista delle pizze disponibili</h3>
+            </div>
+            <div class="col-3 d-flex justify-content-end">
+                <a th:href="@{/pizzas/create}"><button class="btn btn-primary">Aggiungi una pizza</button></a>
+            </div>
+            <div class="col-3">
+                <form class="input-group" method="GET" th:action="@{/pizzas}">
+                    <input type="text" class="form-control" placeholder="Cerca..." name="name">
+                    <button class="btn btn-outline-primary" type="submit" id="button-addon1">Cerca</button>
+                </form>
+            </div>
+            <div class="col-12">
+                <table class="table" th:if="${pizzas.size() > 0}">
+                    <thead>
+                        <tr scope="row">
+                            <th scope="col">Pizza</th>
+                            <th scope="col">Descrizione</th>
+                            <th scope="col">Prezzo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr scope="row" th:each="pizza : ${pizzas}" th:object="${pizza}">
+                            <td><a class="link-underline-opacity-0 link-primary"
+                                    th:href="@{'/pizzas/' + *{id}}">[[*{name}]]</a></td>
+                            <td th:text="*{description}"></td>
+                            <td th:text="|€ ${#numbers.formatDecimal(pizza.price, 1, 2, 'COMMA')}|"></td>
+                            <td><a th:href="@{'/pizzas/edit/' + *{id}}"><button
+                                        class="btn btn-warning btn-sm">Modifica</button></a>
+                            </td>
+                            <td>
+                                <!-- Modal trigger -->
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal">
+                                    Elimina
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="deleteModal" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5">Cancellare
+                                                    definitivamente la pizza?</h1>
+                                                <button type="button" class="btn-close"
+                                                    data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Stai per eliminare la pizza [[*{name}]]</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                    data-bs-dismiss="modal">Indietro</button>
+                                                <form th:action="@{'/pizzas/delete/' + *{id}}" method="post">
+                                                    <button type="submit" class="btn btn-danger">Elimina</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 text-bg-warning bg-warning-subtle rounded-3 p-3" th:unless="${pizzas.size() > 0}">
+                <h4>Non sono state trovate pizze</h4>
+                <p>La ricerca non ha prodotto alcun risultato</p>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

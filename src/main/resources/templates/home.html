@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria Home</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}" />
+</head>
+
+<body>
+    <div th:replace="~{ fragments/navbar :: navbar }"></div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h3>Abbiamo una grande selezione di pizze, fatte con passione, farina bio, ingredienti di prima qualità
+                    e tanto amore. Ovviamente il prezzo lo rispecchia a pieno!</h3>
+
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda odio labore animi voluptatum. Qui
+                    quis, impedit a velit eius ea! Quos voluptate eaque error molestiae tenetur libero deserunt,
+                    blanditiis sapiente. Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae unde accusantium
+                    sunt impedit excepturi! Impedit repudiandae doloremque nostrum quibusdam voluptatem quidem at itaque
+                    ratione maxime. Quo voluptas sit at amet.
+                    Commodi odit vero quaerat consequatur. Distinctio ratione quo alias, itaque suscipit beatae
+                    exercitationem corrupti facere laboriosam debitis repellendus voluptatum ipsa harum error totam, ex
+                    ullam, nam eum aut odio a.
+                    Illo nostrum cupiditate aspernatur, quod nisi inventore laborum, repellat unde molestias alias
+                    facilis animi quam accusantium quos explicabo reprehenderit fuga minus rerum! Recusandae deserunt
+                    deleniti ipsum itaque mollitia, ullam architecto.</p>
+
+                <a class="link-primary" th:href="@{/pizzas}">Esplora la nostra selezione</a>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>
