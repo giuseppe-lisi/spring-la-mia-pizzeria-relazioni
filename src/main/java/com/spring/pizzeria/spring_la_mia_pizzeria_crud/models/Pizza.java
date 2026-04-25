@@ -1,12 +1,15 @@
 package com.spring.pizzeria.spring_la_mia_pizzeria_crud.models;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -16,68 +19,77 @@ import jakarta.validation.constraints.Size;
 @Table(name = "pizzas")
 public class Pizza {
 
-    // costruttore vuoto senza argomenti obbligatorio
-    public Pizza() {}
+  // costruttore vuoto senza argomenti obbligatorio
+  public Pizza() {
+  }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @Column(nullable = false)
-    @NotBlank(message = "Name cannot be empty or shorter than 3 characters")
-    @Size(min = 3, message = "Inserisci almeno 3 caratteri")
-    private String name;
-    
-    @Lob
-    @Column(nullable = false, columnDefinition = "TEXT")
-    @NotBlank(message = "Inserisci una descrizione")
-    private String description;
-    
-    private String img;
+  @Column(nullable = false)
+  @NotBlank(message = "Name cannot be empty or shorter than 3 characters")
+  @Size(min = 3, message = "Inserisci almeno 3 caratteri")
+  private String name;
 
-    @Column(precision = 10, scale = 2)
-    @Min(value = 0, message = "Il prezzo deve essere positivo")
-    private BigDecimal price;
+  @Lob
+  @Column(nullable = false, columnDefinition = "TEXT")
+  @NotBlank(message = "Inserisci una descrizione")
+  private String description;
 
-    // getter e setter
-    public int getId() {
-      return this.id;
-    }
-    public void setId(int value) {
-      this.id = value;
-    }
+  private String img;
 
-    public String getName() {
-      return this.name;
-    }
-    public void setName(String value) {
-      this.name = value;
-    }
+  @Column(precision = 10, scale = 2)
+  @Min(value = 0, message = "Il prezzo deve essere positivo")
+  private BigDecimal price;
 
-    public String getDescription() {
-      return this.description;
-    }
-    public void setDescription(String value) {
-      this.description = value;
-    }
+  @OneToMany( mappedBy = "pizza" )
+  private List<Offer> offers;
 
-    public String getImg() {
-      return this.img;
-    }
-    public void setImg(String value) {
-      this.img = value;
-    }
+  // getter e setter
+  public int getId() {
+    return this.id;
+  }
 
-    public BigDecimal getPrice() {
-      return this.price;
-    }
-    public void setPrice(BigDecimal value) {
-      this.price = value;
-    }
+  public void setId(int value) {
+    this.id = value;
+  }
 
-    // override metodo toString
-    @Override
-    public String toString() {
-        return String.format("%s - € %.2f", name, price);
-    }
+  public String getName() {
+    return this.name;
+  }
+
+  public void setName(String value) {
+    this.name = value;
+  }
+
+  public String getDescription() {
+    return this.description;
+  }
+
+  public void setDescription(String value) {
+    this.description = value;
+  }
+
+  public String getImg() {
+    return this.img;
+  }
+
+  public void setImg(String value) {
+    this.img = value;
+  }
+
+  public BigDecimal getPrice() {
+    return this.price;
+  }
+
+  public void setPrice(BigDecimal value) {
+    this.price = value;
+  }
+
+  // override metodo toString
+  @Override
+  public String toString() {
+    return String.format("%s - € %.2f", name, price);
+  }
 }
