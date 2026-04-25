@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.pizzeria.spring_la_mia_pizzeria_crud.models.Pizza;
+import com.spring.pizzeria.spring_la_mia_pizzeria_crud.repositories.OfferRepository;
 import com.spring.pizzeria.spring_la_mia_pizzeria_crud.repositories.PizzaRepository;
 
 import jakarta.validation.Valid;
@@ -26,15 +27,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PizzaController {
 
     @Autowired
-    private PizzaRepository repo;
+    private PizzaRepository pizzasRepo;
+    
+    @Autowired
+    private OfferRepository offersRepo;
 
     @GetMapping()
     public String index(Model model, @RequestParam(required = false) String name) {
         if (name != null) {
-            List<Pizza> result = repo.findByNameContaining(name);
+            List<Pizza> result = pizzasRepo.findByNameContaining(name);
             model.addAttribute("pizzas", result);
         } else {
-            List<Pizza> result = repo.findAll();
+            List<Pizza> result = pizzasRepo.findAll();
             model.addAttribute("pizzas", result);
         }
 
@@ -43,7 +47,7 @@ public class PizzaController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable int id, Model model) {
-        Pizza pizza = repo.findById(id).get();
+        Pizza pizza = pizzasRepo.findById(id).get();
 
         model.addAttribute(pizza);
 
@@ -65,7 +69,7 @@ public class PizzaController {
             return "pizzas/create";
         }
 
-        repo.save(formPizza);
+        pizzasRepo.save(formPizza);
 
         return "redirect:/pizzas";
     }
@@ -73,7 +77,7 @@ public class PizzaController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
 
-        Pizza pizza = repo.findById(id).get();
+        Pizza pizza = pizzasRepo.findById(id).get();
         
         model.addAttribute("pizza", pizza);
 
@@ -87,7 +91,7 @@ public class PizzaController {
             return "/pizzas/edit";
         }
 
-        repo.save(formPizza);
+        pizzasRepo.save(formPizza);
 
         return "redirect:/pizzas";
     }
@@ -95,7 +99,7 @@ public class PizzaController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable int id) {
         
-        repo.deleteById(id);
+        pizzasRepo.deleteById(id);
         
         return "redirect:/pizzas";
     }
