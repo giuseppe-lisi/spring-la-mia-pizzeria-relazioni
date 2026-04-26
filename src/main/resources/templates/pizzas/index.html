@@ -30,20 +30,23 @@
                 <table class="table" th:if="${pizzas.size() > 0}">
                     <thead>
                         <tr scope="row">
-                            <th scope="col">Pizza</th>
-                            <th scope="col">Descrizione</th>
-                            <th scope="col">Prezzo</th>
+                            <th scope="col" class="fs-5">Pizza</th>
+                            <th scope="col" class="fs-5">Descrizione</th>
+                            <th scope="col" class="fs-5">Prezzo</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr scope="row" th:each="pizza : ${pizzas}" th:object="${pizza}">
-                            <td><a class="link-underline-opacity-0 link-primary"
-                                    th:href="@{'/pizzas/' + *{id}}">[[*{name}]]</a></td>
+                            <td class="fw-bold">[[*{name}]]</td>
                             <td th:text="*{description}"></td>
                             <td th:text="|€ ${#numbers.formatDecimal(pizza.price, 1, 2, 'COMMA')}|"></td>
+                            <td><a class="link-underline-opacity-0 link-primary" th:href="@{'/pizzas/' + *{id}}"><button
+                                        class="btn btn-primary btn-sm">Dettaglio e Offerte</button></a>
+                            </td>
                             <td><a th:href="@{'/pizzas/edit/' + *{id}}"><button
                                         class="btn btn-warning btn-sm">Modifica</button></a>
                             </td>
+                            <!-- Bottone Delete -->
                             <td>
                                 <!-- Modal trigger -->
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
