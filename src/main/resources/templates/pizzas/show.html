@@ -23,7 +23,32 @@
                         <p th:text="*{description}"></p>
                         <hr>
                         <h3>Offerte disponibili</h3>
-                        <div th:unless="${offers}" class="bg-warning-subtle p-3">Non sono disponibili offerte per questa pizza</div>
+                        <div th:unless="${pizza.offers.size() > 0}" class="bg-warning-subtle p-3">Non sono disponibili
+                            offerte per questa pizza</div>
+                        <div th:if="${pizza.offers.size() > 0}" th:object="${pizza.offers}">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nome offerta</th>
+                                        <th>Data inizio</th>
+                                        <th>Data Scadenza</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="offer : ${pizza.offers}">
+                                        <td th:text="${offer.title}"></td>
+                                        <td th:text="${offer.startDate}"></td>
+                                        <td th:text="${offer.endDate}"></td>
+                                        <td><a th:href="@{'/offers/edit/' + ${offer.id}}"><button class="btn btn-warning btn-sm">Modifica</button></a></td>
+                                        <td><a th:href="@{'/offers/delete/' + ${offer.id}}"><button class="btn btn-danger btn-sm">Elimina</button></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <a th:href="@{'/pizzas/' + ${pizza.id} + '/add-offer'}">
+                            <button class="btn btn-primary mt-3 btn-sm" type="button">Aggiungi un'offerta</button>
+                        </a>
                     </div>
                 </div>
             </div>
