@@ -2,6 +2,8 @@ package com.spring.pizzeria.spring_la_mia_pizzeria_crud.models;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +13,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 
@@ -26,15 +30,17 @@ public class Offer {
     @JoinColumn( name = "pizza_id", nullable = false)
     private Pizza pizza;
 
-    @NotNull(message = "Inserire un nome per l'offerta")
+    @NotBlank(message = "Inserire un nome per")
     private String title;
 
-    @NotNull(message = "Inserire una data di inizio dell'offerta")
+    @NotNull(message = "Inserire una data di inizio")
     @PastOrPresent(message = "La data di inizio non può essere nel futuro")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
     
-    @NotNull(message = "Inserire una data di inizio dell'offerta")
+    @NotNull(message = "Inserire una data di inizio")
     @Future(message = "La data di terminazione di un'offerta deve essere nel futuro")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     public Integer getId() {
