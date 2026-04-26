@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.spring.pizzeria.spring_la_mia_pizzeria_crud.models.Offer;
 import com.spring.pizzeria.spring_la_mia_pizzeria_crud.models.Pizza;
 import com.spring.pizzeria.spring_la_mia_pizzeria_crud.repositories.OfferRepository;
 import com.spring.pizzeria.spring_la_mia_pizzeria_crud.repositories.PizzaRepository;
@@ -28,9 +29,6 @@ public class PizzaController {
 
     @Autowired
     private PizzaRepository pizzasRepo;
-    
-    @Autowired
-    private OfferRepository offersRepo;
 
     @GetMapping()
     public String index(Model model, @RequestParam(required = false) String name) {
@@ -102,5 +100,15 @@ public class PizzaController {
         pizzasRepo.deleteById(id);
         
         return "redirect:/pizzas";
+    }
+
+    @GetMapping("/{id}/add-offer")
+    public String addOffer(@PathVariable int id, Model model) {
+        Offer offer = new Offer();
+        offer.setPizza(pizzasRepo.findById(id).get());
+        
+        model.addAttribute("offer", offer);
+
+        return "offers/create";
     }
 }
