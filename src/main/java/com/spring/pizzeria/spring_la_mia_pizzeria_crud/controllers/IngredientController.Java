@@ -1,5 +1,6 @@
 package com.spring.pizzeria.spring_la_mia_pizzeria_crud.controllers;
 
+import com.spring.pizzeria.spring_la_mia_pizzeria_crud.repositories.PizzaRepository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,23 +11,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.pizzeria.spring_la_mia_pizzeria_crud.models.Ingredient;
+import com.spring.pizzeria.spring_la_mia_pizzeria_crud.models.Pizza;
 import com.spring.pizzeria.spring_la_mia_pizzeria_crud.repositories.IngredientsRepository;
 
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
 @RequestMapping("/ingredients")
 public class IngredientController {
 
+    private final PizzaRepository pizzaRepository;
     @Autowired
     private IngredientsRepository ingredientRepository;
+
+    IngredientController(PizzaRepository pizzaRepository) {
+        this.pizzaRepository = pizzaRepository;
+    }
 
     @GetMapping
     public String index(Model model) {
@@ -60,6 +65,13 @@ public class IngredientController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable int id) {
+
+        Ingredient ingredient = ingredientRepository.findById(id).get();
+
+        for (Pizza pizza : ingredient.getPizzas()) {
+            pizza.getIngredients().remove(ingredient);
+        }
+
         ingredientRepository.deleteById(id);
         
         return "redirect:/ingredients";
