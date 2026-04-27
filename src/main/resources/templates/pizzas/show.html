@@ -20,7 +20,10 @@
                     <div class="ms-3">
                         <h3 th:text="'Dettaglio ' + *{name}"></h3>
                         <h5 th:text="${pizza.toString()}"></h5>
-                        <p th:text="*{description}"></p>
+                        <h5>Ingredienti</h5>
+                        <ul>
+                            <li th:each="ingredient : ${pizza.ingredients}" th:text="${ingredient.name}"></li>
+                        </ul>
                         <hr>
                         <h3>Offerte disponibili</h3>
                         <div th:unless="${pizza.offers.size() > 0}" class="bg-warning-subtle p-3">Non sono disponibili
