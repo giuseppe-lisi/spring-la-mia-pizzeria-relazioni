@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuova Offerta</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}" />
+</head>
+
+<body>
+    <!-- header -->
+    <div th:replace="~{ fragments/navbar :: navbar }"></div>
+
+    <main>
+        <div class="container mt-5">
+            <h3>Aggiungi un nuovo ingrediente</h3>
+            <form th:action="@{/ingredients/add}" method="POST" th:object="${ingredient}">
+                <div class="mb-3">
+                    <input type="text" hidden th:field="*{id}">
+                    <input type="text" hidden th:field="*{pizzas}">
+                    <label for="name" class="form-label mt-3">Nome ingrediente</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="is-invalid">
+                    <!-- usiamo inbuilt func di thymeleaf per mostrare gli errori del campo, se ce ne sono -->
+                    <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                        <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Aggiungi ingrediente</button>
+            </form>
+        </div>
+
+    </main>
+</body>
+
+</html>
