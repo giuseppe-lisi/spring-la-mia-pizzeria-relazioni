@@ -84,6 +84,7 @@ public class PizzaController {
 
         Pizza pizza = pizzasRepo.findById(id).get();
 
+        model.addAttribute("ingredients", ingredientRepo.findAll());
         model.addAttribute("pizza", pizza);
 
         return "pizzas/edit";
@@ -93,6 +94,7 @@ public class PizzaController {
     public String update(@Valid @ModelAttribute Pizza formPizza, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("ingredients", ingredientRepo.findAll());
             return "/pizzas/edit";
         }
 
