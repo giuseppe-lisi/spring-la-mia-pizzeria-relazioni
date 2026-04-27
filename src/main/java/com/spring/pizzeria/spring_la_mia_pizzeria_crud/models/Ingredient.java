@@ -12,39 +12,41 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table( name = "ingredients" )
+@Table(name = "ingredients")
 public class Ingredient {
 
-    @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @ManyToMany(mappedBy = "ingredients")
-    private List<Pizza> pizzas;
+  @ManyToMany(mappedBy = "ingredients")
+  private List<Pizza> pizzas;
 
-    @NotBlank( message = "Ingrediente deve avere un nome" )
-    @Column( unique = true )
-    private String name;
+  @NotBlank(message = "Ingrediente deve avere un nome")
+  private String name;
 
-    // get set
-    public Integer getId() {
-      return this.id;
-    }
-    public void setId(Integer value) {
-      this.id = value;
-    }
+  // get set
+  public Integer getId() {
+    return this.id;
+  }
 
-    public List<Pizza> getPizzas() {
-      return this.pizzas;
-    }
-    public void setPizzas(List<Pizza> value) {
-      this.pizzas = value;
-    }
+  public void setId(Integer value) {
+    this.id = value;
+  }
 
-    public String getName() {
-      return this.name;
-    }
-    public void setName(String value) {
-      this.name = value;
-    }
+  public List<Pizza> getPizzas() {
+    return this.pizzas;
+  }
+
+  public void setPizzas(List<Pizza> value) {
+    this.pizzas = value;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public void setName(String value) {
+    this.name = value;
+  }
 }
